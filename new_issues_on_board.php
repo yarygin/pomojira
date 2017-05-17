@@ -7,11 +7,8 @@
     <?php
 
     require_once 'vendor/autoload.php';
-    require_once 'lib/NewIssuesFinder.class.php';
-	require_once 'lib/IssueStorage.class.php';
-	require_once 'lib/Helper.class.php';
 
-	$newIssuesFinder = new NewIssuesFinder();
+	$newIssuesFinder = new \Pomojira\NewIssuesFinder();
 
 	if (isset($_GET['save']))
     {
@@ -20,7 +17,7 @@
         die('Задачи сохранены');
     }
 
-	$latestDate = IssueStorage::getMaxDate();
+	$latestDate = \Pomojira\IssueStorage::getMaxDate();
 	$newIssues = $newIssuesFinder->findNewIssues();
 	echo "Новые задачи " . (!is_null($latestDate) ? "после $latestDate" : '') . ':<br>';
     foreach ($newIssues as $i)

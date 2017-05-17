@@ -4,14 +4,13 @@
  */
 
 require_once 'vendor/autoload.php';
-require_once 'lib/Helper.class.php';
 
 $issueList = explode(',', $_GET['issues']);
 $dataToRender = [];
 foreach ($issueList as $issueKey)
 {
     // TODO: вместо этого можно при получении задач вытянуть всю инфу
-    $api = Helper::getApi();
+    $api = \Pomojira\Helper::getApi();
     $issueData = $api->getIssue($issueKey)->getResult();
     $dataToRender[] = [
 		'issueKey' => $issueData['key'],

@@ -2,6 +2,7 @@
 /**
  * @author Seleznyov Artyom seleznev@tutu.ru
  */
+namespace Pomojira;
 
 use chobie\Jira\Issues\Walker;
 
@@ -12,10 +13,8 @@ class NewIssuesFinder
 		$issueList = $this->_getIssuesFromBoard();
 		$savedIssuesList = $this->_getSavedIssues();
 		$newIssues = [];
-		foreach ($issueList as $i)
-		{
-			if (!in_array($i, $savedIssuesList))
-			{
+		foreach ($issueList as $i) {
+			if (!in_array($i, $savedIssuesList)) {
 				$newIssues[] = $i;
 			}
 		}
@@ -26,15 +25,11 @@ class NewIssuesFinder
 	public function save($issueList)
 	{
 		$savedIssuesList = $this->_getSavedIssues();
-		foreach ($issueList as $i)
-		{
-			if (!in_array($i, $savedIssuesList))
-			{
+		foreach ($issueList as $i) {
+			if (!in_array($i, $savedIssuesList)) {
 				IssueStorage::insert([$i]);
 				$newIssues[] = $i;
-			}
-			else
-			{
+			} else {
 				IssueStorage::update($i);
 			}
 		}
@@ -67,8 +62,7 @@ class NewIssuesFinder
 	private function _getSavedIssues()
 	{
 		$res = [];
-		foreach (IssueStorage::select() as $item)
-		{
+		foreach (IssueStorage::select() as $item) {
 			$res[] = $item['issue_key'];
 		}
 		return $res;

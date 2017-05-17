@@ -2,6 +2,9 @@
 /**
  * @author Seleznyov Artyom seleznev@tutu.ru
  */
+namespace Pomojira;
+
+use \PDO;
 
 class IssueStorage
 {
@@ -9,8 +12,7 @@ class IssueStorage
 
 	public static function insert(array $issues)
 	{
-		foreach ($issues as $i)
-		{
+		foreach ($issues as $i) {
 			$sth = self::_PDO()->prepare('INSERT INTO '.self::TABLE_NAME.' (issue_key, `date`) VALUES(:issueKey, NOW())');
 			$sth->execute(['issueKey' => $i]);
 		}
@@ -33,8 +35,16 @@ class IssueStorage
 		return isset($result['date']) ? $result['date'] : null;
 	}
 
+	/**
+	 *
+	 */
 	private static function _PDO()
 	{
-		return new PDO('mysql:dbname=pomojira;host=localhost', 'root', '');
+		$dbname = \env('DB_DATABASE', '');
+		$host = \env('DB_HOST', 'localhost');
+		$port = \env('DB_PORT', 3306);
+		$user = \env('DB_USER', 'root');
+		$password = \env('DB_PASSWORD', '');
+		return new PDO("mysql:dbname=$dbname;host=$host;port=$port", $user, $password);
 	}
 }

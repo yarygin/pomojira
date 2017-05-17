@@ -1,5 +1,19 @@
 {
-    "require": {
-        "chobie/jira-api-restclient": "^2.0@dev"
+  "require": {
+    "chobie/jira-api-restclient": "^2.0@dev",
+    "vlucas/phpdotenv": "^2.4"
+  },
+  "autoload": {
+    "files": [
+      "bootstrap.php"
+    ],
+    "psr-4": {
+      "Pomojira\\": "lib/"
     }
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ]
+  }
 }
